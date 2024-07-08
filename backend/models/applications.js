@@ -54,6 +54,9 @@ const applicationSchema = new Schema({
             enum : ["job sekker"],
            // required : true,
         },
+        reject :{
+            type : Boolean,
+        },
         
 
 })

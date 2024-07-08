@@ -16,20 +16,21 @@ cloudinary.v2.config({
 
 export const employergetAllApplication = catchAsyncError(
     async (req, res, next) => {
-      const { role } = req.user;
-      if (role === "Job Seeker") {
-        return next(
-          new ErrorHandler("Job Seeker not allowed to access this resource.", 400)
-        );
-      }
-      const { _id } = req.user;
-      const applications = await Application.find({ "emploeyrID.user": _id });
-      res.status(200).json({
-        success: true,
-        applications,
-      });
+        const { role } = req.user;
+        if (role === "Job Seeker") {
+            return next(
+                new ErrorHandler("Job Seeker not allowed to access this resource.", 400)
+            );
+        }
+        const { _id } = req.user;
+        const applications = await Application.find({ "emploeyrID.user": _id });
+        // console.log(applications)
+        res.status(200).json({
+            success: true,
+            applications,
+        });
     }
-  );
+);
 
 
 
@@ -55,6 +56,7 @@ export const jobseekergetAllApplication = catchAsyncError(async (req, res, next)
     const { _id } = req.user;
     // console.log(_id);
     const applications = await Application.find({ 'applicantID.user': _id });
+    // console.log(applications)
     // console.log(applications)
     res.status(200).json({
         success: true,
@@ -162,4 +164,13 @@ export const postApplication = catchAsyncError(async (req, res, next) => {
 });
 
 
+export const handlereject = catchAsyncError(async (req, res, next) => {
+    const { role } = req.user;
+    if (role === "Job Seeker") {
+        return next(
+            new ErrorHandler("Job Seeker not allowed to access this resource.", 400)
+        );
+    }
 
+
+})

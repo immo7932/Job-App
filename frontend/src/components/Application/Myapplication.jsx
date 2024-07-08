@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import ResumeModal from "./ResumeModal.jsx";
 
 const Myapplication = () => {
-  const {isAuthorized, user } = useContext(Context);
+  const { isAuthorized, user } = useContext(Context);
   const [applications, setApplications] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [resumeImageUrl, setResumeImageUrl] = useState("");
@@ -22,7 +22,8 @@ const Myapplication = () => {
           .then((res) => {
             setApplications(res.data.applications);
           });
-      } else {
+      }
+      else {
         axios
           .get("http://localhost:5000/api/v2/app/jobseekergetAllApplication", {
             withCredentials: true,
@@ -39,7 +40,8 @@ const Myapplication = () => {
   if (!isAuthorized) {
     navigateTo("/");
   }
-  console.log(applications)
+
+
   const deleteApplication = (id) => {
     try {
       axios
@@ -65,7 +67,7 @@ const Myapplication = () => {
   const closeModal = () => {
     setModalOpen(false);
   };
-
+      console.log(user.role)
   return (
     <section className="my_applications page">
       {user && user.role === "Job Sekker" ? (
@@ -99,13 +101,16 @@ const Myapplication = () => {
           ) : (
             applications.map((element) => {
               return (
-                <EmployerCard
-                  element={element}
-                  key={element._id}
-                  openModal={openModal}
-                />
+                <div>
+                  <EmployerCard
+                    element={element}
+                    key={element._id}
+                    openModal={openModal}
+                  />
+                </div>
               );
             })
+
           )}
         </div>
       )}
@@ -176,6 +181,12 @@ const EmployerCard = ({ element, openModal }) => {
           <p>
             <span>CoverLetter:</span> {element.coverletter}
           </p>
+          <div class="button-container">
+            <button className="accept-button">Reject Application</button>
+            <button className="accept-button">Accept and Schedule Interview</button>
+          </div>
+
+
         </div>
         <div className="resume">
           <img
