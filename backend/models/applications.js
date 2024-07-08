@@ -34,6 +34,14 @@ const applicationSchema = new Schema({
                 required : true,
             }
         },
+        applicantID: {
+            user: {
+              type: mongoose.Schema.Types.ObjectId,
+              ref: "User",
+              required: true,
+            }
+        },
+        
         emploeyrID : {
             user : {
                 type : mongoose.Schema.Types.ObjectId,
@@ -45,7 +53,8 @@ const applicationSchema = new Schema({
             type : String,
             enum : ["job sekker"],
            // required : true,
-        }
+        },
+        
 
 })
 

@@ -24,7 +24,7 @@ export const App = () => {
   useEffect(()=>{
     const fetchUser = async()=>{
           try{
-              const response = await axios.get("", {withCredentials : true})
+              const response = await axios.get("http://localhost:5000/api/v2/user/getuser", {withCredentials : true})
               setUser(response.data.user);
               setIsAuthorized(true)
           }
@@ -43,12 +43,12 @@ export const App = () => {
     <Navbar/>
       <Routes>
         <Route path='/login' element = {<Login/>}/>
-        <Route path='/regidter' element = {<Register/>}/>
+        <Route path='/register' element = {<Register/>}/>
         <Route path='/' element = {<Home/>}/>
         <Route path='/Job/Postjob' element = {<Postjob/>}/>
         <Route path='/Job/Myjob' element = {<Myjob/>}/>
-        <Route path='/Job/Jobs/:id' element = {<Jobs/>}/>
-        <Route path='/Job/JobDetails' element = {<JobDetails/>}/>
+        <Route path='/getall' element = {<Jobs/>}/>
+        <Route path='/Job/:id' element = {<JobDetails/>}/>
         <Route path='*' element = {<Notfound/>}/>
         <Route path='/Application/:id' element = {<Application/>}/>
         <Route path='/Application/my' element = {<Myapplication/>}/>

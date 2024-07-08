@@ -4,7 +4,7 @@ import Jobs from "../models/jobs.js";
 
 
 export const getAlljobs  = catchAsyncError(async(req, res, next) =>{
-    const jobs = await Jobs.find({expired : false});
+    const jobs = await Jobs.find({Expired : false});
     res.status(200).json({
         success : true,
         jobs,
@@ -53,6 +53,7 @@ export const createjobs = catchAsyncError(async(req, res, next) =>{
 
 export const getmyjob = catchAsyncError(async(req, res, next) =>{
     const {role } = req.user;
+   
     if(role === "job sekker"){
         return next(new ErrorHandler("Job seeker cannot create jobs", 400));
     }
@@ -100,3 +101,21 @@ export const deletejob = catchAsyncError(async(req, res, next)=>{
         message : "jobs deleted succesfully",
     })
 })
+
+export const getSingleJob = catchAsyncError(async (req, res, next) => {
+    
+    const { id } = req.params;
+    try {
+      const job = await Jobs.findById(id);
+    //  console.log(job);
+      if (!job) {
+        return next(new ErrorHandler("Job not found.", 404));
+      }
+      res.status(200).json({
+        success: true,
+        job,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(`Invalid ID / CastError`, 404));
+    }
+  });

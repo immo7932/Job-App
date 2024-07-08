@@ -23,8 +23,7 @@ export const employergetAllApplication = catchAsyncError(
         );
       }
       const { _id } = req.user;
-      console.log(_id)
-      const applications = await Application.find({ "employerID.user": _id });
+      const applications = await Application.find({ "emploeyrID.user": _id });
       res.status(200).json({
         success: true,
         applications,
@@ -54,10 +53,12 @@ export const jobseekergetAllApplication = catchAsyncError(async (req, res, next)
     }
 
     const { _id } = req.user;
-    const application = await Application.find({ 'applicantID.User': _id });
+    // console.log(_id);
+    const applications = await Application.find({ 'applicantID.user': _id });
+    // console.log(applications)
     res.status(200).json({
         success: true,
-        application,
+        applications,
     });
 });
 
@@ -87,7 +88,7 @@ export const postApplication = catchAsyncError(async (req, res, next) => {
 
 
     if (!req.files || !req.files.resume) {
-        console.log("No resume found in request files.");
+        // console.log("No resume found in request files.");
         return next(new ErrorHandler("Resume is required", 400));
     }
 
@@ -108,7 +109,7 @@ export const postApplication = catchAsyncError(async (req, res, next) => {
     }
 
     const { name, email, coverletter, phone, adress, jobId } = req.body;
-    console.log("jobId:", jobId);
+    // console.log("jobId:", jobId);
 
     const applicantID = {
         user: req.user._id,
@@ -139,7 +140,7 @@ export const postApplication = catchAsyncError(async (req, res, next) => {
         return next(new ErrorHandler("Please fill all the details", 400));
     }
 
-    const application = await Application.create({
+    const applications = await Application.create({
         name,
         email,
         coverletter,
@@ -156,7 +157,9 @@ export const postApplication = catchAsyncError(async (req, res, next) => {
     res.status(200).json({
         success: true,
         message: "You have applied successfully",
-        application,
+        applications,
     });
 });
+
+
 
